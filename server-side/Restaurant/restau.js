@@ -1,6 +1,11 @@
 const Restau = require("../model/Restau");
 
 exports.createRestau = async (req, res, next) => {
+
+  const images = req.files.map((file) => {
+    return file.path
+    })
+
     try {
         const { title, city, desc } = req.body;
         const { id } = req.params;
@@ -17,7 +22,8 @@ exports.createRestau = async (req, res, next) => {
         const newrestau = await Restau.create({
             title,
             city,
-            desc
+            desc,
+            images: images,
         });
 
         console.log('New restau has been created');
@@ -110,7 +116,7 @@ exports.getRestauById = async (req, res) => {
     }
   };
 
-  exports.getAllRestaus = async (req, res) => {
+exports.getAllRestaus = async (req, res) => {
     try {
       const restaus = await Restau.find();
       if (!restaus) {

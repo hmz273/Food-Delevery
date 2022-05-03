@@ -7,6 +7,11 @@ const CategorySchema = new Mongoose.Schema({
     unique: true,
     required: true,
   },
+
+  images: [{
+    type: String,
+    required: [true, 'Hotel must have at least 4 images']
+  }],
 }); 
 
 const Category = Mongoose.model("category", CategorySchema);

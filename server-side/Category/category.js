@@ -1,6 +1,11 @@
 const Category = require("../model/Category");
 
 exports.createCategory = async (req, res, next) => {
+
+  const images = req.files.map((file) => {
+    return file.path
+    })
+
     try {
         const { title } = req.body;
         const category = await Category.findOne({
@@ -15,7 +20,8 @@ exports.createCategory = async (req, res, next) => {
         } 
 
         const newrestau = await Category.create({
-            title
+            title,
+            images: images,
         });
 
         console.log('New category has been created');
@@ -108,4 +114,26 @@ exports.getCategoryById = async (req, res) => {
     }
   };
 
-  
+exports.getAllCategorys = async (req, res) => {
+    try {
+      const categorys = await Category.find();
+      if (!categorys) {
+        return res.status(404).json({
+          error: true,
+          message: 'categorys not found',
+          data: null,
+        });
+      }
+      res.status(200).json({
+        error: false,
+        message: 'categorys retrieved successfully',
+        data: categorys,
+      });
+    } catch (error) {
+      res.status(500).json({
+        error: true,
+        message: error.message,
+        data: null,
+      });
+    }
+  };  

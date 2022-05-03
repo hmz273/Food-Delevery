@@ -16,6 +16,12 @@ const RestauSchema = new Mongoose.Schema({
     type: String,
     required: true,
   },
+  images: [{
+    type: String,
+    required: [true, 'Hotel must have at least 4 images']
+  }],
+  repa: { type: Schema.Types.ObjectId, ref: 'repa' },
+
   
 });
 

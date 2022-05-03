@@ -1,10 +1,12 @@
 const Repa = require("../model/Repa");
-// const Restau = require("../model/Restau");
-// const Category = require("../model/Category");
+
 
 exports.createRepa = async (req, res, next) => {
     try {
-        // const { title, price, desc, categoryId, restauId } = req.body;
+
+      const images = req.files.map((file) => {
+        return file.path
+        })
         const { id } = req.params;
         const repa = await Repa.findOne({
           _id: id,
@@ -17,8 +19,15 @@ exports.createRepa = async (req, res, next) => {
             const error = new Error('repa already exists');
             return next(error);
         } 
-           
-        const newrepa = await Repa.create({...req.body}); 
+
+        const newrepa = await Repa.create({ 
+            title: req.body.title,
+            desc: req.body.desc,
+            price: req.body.price,
+            category: req.body.category,
+            restau: req.body.restau,
+            images: images,
+         });
 
         console.log('newrepa', newrepa);
         res.status(201).json(newrepa);

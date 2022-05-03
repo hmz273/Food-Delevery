@@ -7,24 +7,33 @@ const RepaSchema = new Mongoose.Schema({
     unique: true,
     required: true,
   },
+
   desc: {
     type: String,
     required: true,
   },
+
   price: {
     type: String,
     required: true,
   },
+
+  images: [{
+    type: String,
+    required: [true, 'Hotel must have at least 4 images']
+  }],
+
   restau: [{ 
     type: Schema.Types.ObjectId,
      ref: 'restau', 
      required: true 
-    }],
+  }],
+
   category: [{
      type: Schema.Types.ObjectId,
       ref: 'category', 
       required: true
-     }],
+  }],
 
   
 });
